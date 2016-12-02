@@ -5,11 +5,11 @@ from time import sleep
 app = flask.Flask(__name__)
 app.debug = True
 
-def event_barcode():
+def event_barcodecliente():
     messageid = 0
-    ser = serial.Serial()
-    ser.port = 0
-    ser.baudrate = 9600
+    ser = serial.Serial('/dev/ttyACM0', 9600)
+    #ser.port = 0
+    #ser.baudrate = 9600
     ser.bytesize = 8
     ser.parity = serial.PARITY_NONE
     ser.stopbits = serial.STOPBITS_ONE
@@ -31,12 +31,12 @@ def event_barcode():
                 messageid = messageid + 1
                 str_list = []
 
-@app.route('/barcode')
-def barcode():
-    newresponse = flask.Response(event_barcode(), mimetype="text/event-stream")
+@app.route('/barcodecliente')
+def barcodecliente():
+    newresponse = flask.Response(event_barcodecliente(), mimetype="text/event-stream")
     newresponse.headers.add('Access-Control-Allow-Origin', '*')
     newresponse.headers.add('Cache-Control', 'no-cache')
     return newresponse
 
 if __name__ == '__main__':
-    app.run(port=8080, threaded=True)
+    app.run(port=5000, threaded=True)

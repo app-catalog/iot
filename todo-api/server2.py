@@ -6,7 +6,7 @@ from flask import Flask, request
 app = Flask(__name__)
 
 #@app.route('/todo/api/v1.0/project')
-@app.route("/")
+@app.route("/root/Desktop/iot/todo-api/cliente")
 
 def get_project():
     return json.dump(serial.Serial('/dev/tty/ACM0',9600))
