@@ -1,0 +1,97 @@
+<html version="XHTML+RDFa 1.0" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:ssn="http://purl.oclc.org/NET/ssnx/ssn/"
+    xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+    xmlns:gn="http://www.geonames.org/ontology#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1#"
+    xmlns:dbp="http://dbpedia.org/ontology/">
+<head>
+    <title>Cadastramento de Sensores</title>
+    <script type="text/javascript" src="email.js"></script>
+    <script type="text/javascript">
+        function handleSubmit(event, uri){
+            prepareEmail();
+            calli.submitTurtle(event,uri);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Novo Cadastro</h1>
+        </div>
+        <form role="form" method="POST" action="" enctype="text/turtle" resource="" typeof="ssn:SensingDevice" class="row"
+                onsubmit="calli.submitTurtle(event,calli.slugify($('#SensingDevice').val()))">
+            <fieldset class="col-sm-4">
+                <div class="form-group">
+                    <label for="SensingDevice">SensorID</label>
+                    <input type="text" class="form-control" id="SensingDevice" value="{ssn:SensingDevice}" required="required" autofocus="autofocus"
+                                onchange="calli.updateProperty(event, 'ssn:SensingDevice')" />
+                </div>
+                 <div class="form-group">
+                    <label for="observes">Variável medida</label>
+                    <input type="text" class="form-control" id="observation" value="{ssn:observes}" required="required" autofocus="autofocus"
+                                onchange="calli.updateProperty(event, 'ssn:observes')" />
+                </div>
+                <div class="form-group">
+                        <label for="Address">Localização</label>
+                        <div rel="vcard:hasAddress">
+                            <div id="address" typeof="vcard:Address">
+                                <input type="text" class="form-control" value="{vcard:street-address}" placeholder="Rua"
+                                     onchange="calli.updateProperty(event,'vcard:street-address')"/>
+                                <input type="text" class="form-control" value="{vcard:locality}" placeholder="Cidade" 
+                                     onchange="calli.updateProperty(event,'vcard:locality')"/>
+                                <input type="text" class="form-control" value="{vcard:region}" placeholder="Estado"
+                                    onchange="calli.updateProperty(event,'vcard:region')"/>
+                                <input type="text" class="form-control" value="{vcard:postal-code}" placeholder="CEP" pattern="[0-9]{8}" title="5-digit postal code (no spaces or punctuation)" 
+                                     onchange="calli.updateProperty(event,'vcard:postal-code')"/>
+                                <input type="text" class="form-control" value="{vcard:country-name}" placeholder="País"
+                                     onchange="calli.updateProperty(event,'vcard:country-name')"/>
+                            </div>
+                        </div>
+                </div>
+                 <div class="form-group">
+                    <label for="product">Dados do Fabricante</label>
+                        <div rel="dbp:product">
+                            <div id="dados_fabricante" typeof="vcard:Organization">
+                                <input type="text" class="form-control" value="{foaf:name}" placeholder="Nome fantasia"
+                                    onchange="calli.updateProperty(event, 'foaf:name')" />
+                                <input type="text" class="form-control" value="{foaf:homepage}" placeholder="URI"
+                                    onchange="calli.updateProperty(event, 'foaf:homepage')" />
+                            </div>
+                        </div>
+                  <div class="form-group">
+                    <label for="definition">Responsável pelo cadastro</label>
+                        <div rel="rdfs:isDefinedby">
+                            <div id="person" typeof="foaf:Person">
+                                <input type="text" class="form-control" value="{foaf:name}" placeholder="Name"  onchange="calli.updateProperty(event, 'foaf:name')"/>
+                                <input type="text" class="form-control" value="{vcard:work}" placeholder="Organização"  onchange="calli.updateProperty(event, 'vcard:work')"/>
+                                         <label for="email_responsavel">Email</label>
+                                            <div rel="foaf:mbox">
+                                                <div id="email" typeof="foaf:mbox">
+                                                    <input type="text" class="form-control" id="email" value="{foaf:mbox}" onchange="calli.updateResource(event, 'foaf:mbox')" />
+                                                  </div>
+                                            </div>
+                                                  
+                            </div>
+                        </div>
+                </div>
+                </div>
+                  <div class="form-group">
+                    <label for="comment">Comentários</label>
+                    <textarea id="comment" class="form-control"
+                        onchange="calli.updateProperty(event, 'rdfs:comment')">{rdfs:comment}</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>
