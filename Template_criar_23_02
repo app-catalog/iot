@@ -1,1 +1,86 @@
+<html version="XHTML+RDFa 1.0" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:ssn="http://purl.oclc.org/NET/ssnx/ssn/"
+    xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+    xmlns:gn="http://www.geonames.org/ontology#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1#"
+    xmlns:dbp="http://dbpedia.org/ontology/">
+<head>
+    <title>Cadastramento de Sensores</title>
+
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Novo Sensor</h1>
+        </div>
+        <form role="form" method="POST" action="" enctype="text/turtle" resource="" typeof="ssn:SensingDevice" class="row"
+                onsubmit="calli.submitTurtle(event,calli.slugify($('#label').val()))">
+            <fieldset class="col-sm-4">
+                <div class="form-group">
+                    <label for="label">SensorID</label>
+                    <input type="text" class="form-control" id="label" value="{rdfs:label}" required="required" autofocus="autofocus"
+                                onchange="calli.updateProperty(event, 'rdfs:label')" />
+                </div>
+                <div class="form-group">
+                    <label for="observes">Variável medida</label>
+                    <textarea id="observes" class="form-control"
+                        onchange="calli.updateProperty(event, 'ssn:observes')">{ssn:observes}</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="GeonamesFeature">Dados de localização</label>
+                    <div rel="gn:locationMap">
+                        <div id="locationmap" typeof="gn:GeonamesFeature">
+                            <input type="text" class="form-control" value="{gn:parentCountry}" placeholder="Paĩs"
+                                onchange="calli.updateProperty(event, 'gn:parentCountry')"/>
+                            <input type="text" class="form-control" value="{gn:postalCode}" placeholder="Codigo Postal"
+                                onchange="calli.updateProperty(event, 'gn:postalCode')"/>
+                            <input type="text" class="form-control" value="{gn:lat}" placeholder="Latitude"
+                                onchange="calli.updateProperty(event, 'gn:lat')"/>
+                            <input type="text" class="form-control" value="{gn:long}" placeholder="Longitude"
+                                onchange="calli.updateProperty(event, 'gn:long')"/>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="col-sm-4">
+                 <div class="form-group">
+                    <label for="MeasurementCapability">Informações técnicas</label>
+                    <div rel="ssn:hasMeasurementCapability">
+                        <div id="hasMeasurementCapability" typeof="ssn:MeasurementCapability">
+                            <input type="text" class="form-control" value="{ssn:inCondition}" placeholder="Condição de funcionamento"
+                                onchange="calli.updateProperty(event, 'ssn:inCondition')"/>
+                             <div rel="ssn:hasMeasurementProperty">    
+                                <div id="hasMeasurementProperty" typeof="ssn:MeasurementProperty">
+                                    <input type="text" class="form-control" value="{ssn:Precision}" placeholder="Precisão"
+                                        onchange="calli.updateProperty(event, 'ssn:Precision')"/>
+                                    <input type="text" class="form-control" value="{ssn:Resolution}" placeholder="Resolução"
+                                        onchange="calli.updateProperty(event, 'ssn:Resolution')"/>
+                                    <input type="text" class="form-control" value="{ssn:Sensitivity}" placeholder="Sensibilidade"
+                                        onchange="calli.updateProperty(event, 'ssn:Sensitivity')"/>
+                                    <input type="text" class="form-control" value="{ssn:ResponseTime}" placeholder="Tempo de resposta"
+                                        onchange="calli.updateProperty(event, 'ssn:ResponseTime')"/>     
+                                </div>
+                             </div>   
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="OperatingRange">Range de medição</label>
+                    <textarea id="hasOperatingRange" class="form-control"
+                        onchange="calli.updateProperty(event, 'ssn:hasOperatingRange')">{ssn:hasOperatingRange}</textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>
 
