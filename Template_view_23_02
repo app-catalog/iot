@@ -1,1 +1,65 @@
 
+<html version="XHTML+RDFa 1.0" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:ssn="http://purl.oclc.org/NET/ssnx/ssn/"
+    xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+    xmlns:gn="http://www.geonames.org/ontology#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1#"
+    xmlns:dbo="http://dbpedia.org/ontology/"
+    xmlns:dul="http://www.loa.istc.cnr.it/ontologies/DUL.owl#">
+    
+<head>
+    <title resource="?this">{rdfs:label}</title>
+    <link rel="edit-form" href="?edit" />
+    <link rel="comments" href="?discussion" />
+    <link rel="version-history" href="?history" />
+    <style> 
+    h2 {
+        font-size: 90%;
+    
+    }
+    </style>
+    
+    
+    <script type="text/javascript">
+         
+        // Remover labels e comments em duplicata, em diferentes linguas, dos topicos de interesse
+        $(document).ready(function(){
+            $('li[id="City"]').each(function(){
+              var element = $(this);
+              var url = ' /Projeto2017/Sensores/City_label_comment.rq?results&amp;tqx=out:sparql-json&amp;r=' + encodeURIComponent(element.attr('resource'));
+              calli.getJSON(url).then(function(json){
+                    element.children('a').text(json.results.bindings[0].label.value);
+                    element.children('p').text(json.results.bindings[0].comment.value);
+              });
+        
+            });
+        });
+        
+    </script>
+</head>
+<body resource="?this">
+    <div class="container">
+        <div class="page-header">
+            <h1>{foaf:name}</h1>
+            <span property="foaf:name" content="?name"></span>
+            <span property="foaf:mbox" content="?email"></span>
+        </div>
+        
+        <p>      
+            Informações de localização:
+        </p>
+        <ul>
+            <li id="City" rel="dul:hasLocation" resource="?City">
+                <a  href="?City" target="_blank">{rdfs:label}</a>
+                <p>{rdfs:comment}</p>
+             </li>
+            
+        </ul>
+    </div>
+</body>
+</html>
