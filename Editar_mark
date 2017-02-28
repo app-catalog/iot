@@ -1,0 +1,69 @@
+<html version="XHTML+RDFa 1.0" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/">
+<head>
+    <title resource="?this">{foaf:nick}</title>
+    
+    <script type="text/javascript" src="email.js"></script>
+    <script type="text/javascript" src="topic_interest.js"></script>
+     
+    
+    <script type="text/javascript">
+    
+        function handleSubmit(comparison, event){
+            prepareEmail();
+            calli.submitUpdate(comparison,event);
+        }
+        
+    </script>
+    
+</head>
+<body resource="?this">
+    <div class="container">
+        <div class="page-header">
+            <h1 property="foaf:nick"></h1>
+        </div>
+        <form id="form" role="form" method="POST" action="" enctype="application/sparql-update" resource="?this" class="row"
+                onsubmit="handleSubmit(comparison, event)">
+            <fieldset class="col-sm-4">
+                <div class="form-group">
+                    <label for="name">Nome:</label>
+                    <input type="text" class="form-control" id="label" value="{foaf:name}" required="required"
+                        onchange="calli.updateProperty(event, 'foaf:name')" />
+                </div>
+                <div class="form-group">
+                    <label for="comment">Descrição</label>
+                    <textarea id="comment" class="form-control"
+                        onchange="calli.updateProperty(event, 'rdfs:comment')">{rdfs:comment}</textarea>
+                </div>
+                <div class="form-group">
+                     <label for="email">Email:</label>
+                        <input type="text" id="email" rel="foaf:mbox" resource="?email" value="{?email}" class="form-control" 
+                        onchange="calli.updateResource(event, 'foaf:mbox')" />
+                </div>
+                
+                <div class="form-group">
+                  <label>Tópicos de interesse:</label>
+                  <select id="topic_interest" class="form-control" multiple="multiple"
+                      onchange="calli.updateResource(event,'foaf:topic_interest')">
+                    <option  selected="selected" rel="foaf:topic_interest" resource="?topic_interest" value="{?topic_interest}">{rdfs:label}</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" onclick="window.location.replace('?view')" class="btn btn-default">Cancel</button>
+                    <button type="button" onclick="calli.deleteResource(event)" class="btn btn-danger">Delete</button>
+                </div>
+            </fieldset>
+        </form>
+        <script type="text/javascript">
+            comparison = calli.copyResourceData('#form');
+        </script>
+    </div>
+</body>
+</html>
