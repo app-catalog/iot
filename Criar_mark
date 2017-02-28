@@ -1,0 +1,53 @@
+<html version="XHTML+RDFa 1.0" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/">
+<head>
+    <title>Nova Pessoa</title>
+    <script type="text/javascript" src="email.js"></script>
+    <script type="text/javascript">
+        function handleSubmit(event, uri){
+            prepareEmail();
+            calli.submitTurtle(event,uri);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Nova Pessoa</h1>
+        </div>
+        <form role="form" method="POST" action="" enctype="text/turtle" resource="" typeof="foaf:Person" class="row"
+                onsubmit="handleSubmit(event, calli.slugify($('#nick').val()))">
+            <fieldset class="col-sm-4">
+                <div class="form-group">
+                    <label for="nick">Identificador (nick):</label>
+                    <input type="text" class="form-control" id="nick" value="{foaf:nick}" required="required" autofocus="autofocus"
+                                onchange="calli.updateProperty(event, 'foaf:nick')" />
+                </div>
+                <div class="form-group">
+                    <label for="name">Nome:</label>
+                    <input type="text" class="form-control" id="name" value="{foaf:name}" required="required" 
+                                onchange="calli.updateProperty(event, 'foaf:name')" />
+                </div>
+                <div class="form-group">
+                    <label for="comment">Descrição:</label>
+                    <textarea id="comment" class="form-control"
+                        onchange="calli.updateProperty(event, 'rdfs:comment')">{rdfs:comment}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" id="email" value="{foaf:mbox}"
+                                onchange="calli.updateResource(event, 'foaf:mbox')" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>
