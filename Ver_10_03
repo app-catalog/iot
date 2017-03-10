@@ -1,0 +1,142 @@
+<html version="XHTML+RDFa 1.0" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:ssn="http://purl.oclc.org/NET/ssnx/ssn/"
+	xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+	xmlns:gn="http://www.geonames.org/ontology#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:dbo="http://dbpedia.org/ontology/"
+	xmlns:dul="http://www.loa.istc.cnr.it/ontologies/DUL.owl#">
+    
+<head>
+	<title resource="?this">{rdfs:label}</title>
+	<link rel="edit-form" href="?edit" />
+	<link rel="comments" href="?discussion" />
+	<link rel="version-history" href="?history" />
+	<style>
+	h2 {
+    	font-size: 90%;
+    
+	}
+	
+	</style>
+	
+	<script type="text/javascript">
+    	 
+    	// Remover labels e comments em duplicata, em diferentes linguas, dos topicos de interesse
+    	$(document).ready(function(){
+        	$('li[id="City"]').each(function(){
+          	var element = $(this);
+          	var url = '/Projeto2017/Sensores/creator_teste.rq?results&amp;tqx=out:sparql-json&amp;r=' + encodeURIComponent(element.attr('resource'));
+          	calli.getJSON(url).then(function(json){
+                	element.children('a').text(json.results.bindings[0].label.value);
+                	element.children('p').text(json.results.bindings[0].comment.value);
+          	});
+   	 
+        	});
+    	});
+   	 
+	</script>    
+    
+</head>
+<body resource="?this">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-sm-6 col-sm-offset-3 text-center">
+        	     <h1>{rdfs:label} <small rel="gn:locationMap" resource="?locationMap">{gn:parentCountry}</small></h1>
+        	</div>
+    	</div>
+    	<div class="row">
+        	<div class="col-sm-4 col-sm-offset-2 text-center">
+           	 
+                	<ul>
+                    	<address rel="gn:locationMap" resource="?locationMap" class="em">
+                        	<span class="glyphicon glyphicon-map-marker" />
+                         	<h2>Código Postal: {gn:postalCode}</h2><h2>Latitude: {gn:lat}, Longitude: {gn:long}</h2>
+                    	</address>
+
+                	</ul>
+        	</div>
+    	</div>
+        <div class="container">
+            <div class="page-header">
+    	       <h3>Sensor de {ssn:observes}</h3>
+                    <span property="ssn:observes" content="?observes"></span>
+                
+                <div rel="rdfs:isDefinedBy" resource="?responsible">   
+                <h4>Cadastrado por: {foaf:name}</h4>
+                    <!-- <span property="foaf:name" content="?isDefinedBy"></span> -->
+                </div>    
+                   
+                
+                
+                 
+            </div>
+        </div>  
+        
+        
+        
+       <p>
+        	Fabricante:
+    	</p>
+   	 
+    	<ul>
+        	<li id="creator" rel="dcterms:creator" resource="?creator">
+            	<a  href="?creator" target="_blank"></a>
+            	<p></p>
+        	</li>
+      	 
+    	</ul>
+    	<p>Dados técnicos:</p>
+    	
+    	     <ul>
+    	       <p>
+    	             Resolução:
+    	       </p>
+    	         <li id="hasMeasurementProperty" rel="ssn:hasMeasurementCapability/ssn:hasMeasurementProperty" resource="?hasMeasurementProperty">
+    	             <a  href="?hasMeasurementProperty" target="_blank">{ssn:Resolution}</a>
+    	         </li>
+    	         
+    	       <p>
+    	           Precisão:
+    	       </p>
+    	         <li id="hasMeasurementProperty" rel="ssn:hasMeasurementCapability/ssn:hasMeasurementProperty" resource="?hasMeasurementProperty">
+    	             <a  href="?hasMeasurementProperty" target="_blank">{ssn:Precision}</a>
+    	         </li>
+    	         
+    	       <p>
+    	           Sensibilidade:
+    	       </p>
+    	         <li id="hasMeasurementProperty" rel="ssn:hasMeasurementCapability/ssn:hasMeasurementProperty" resource="?hasMeasurementProperty">
+    	             <a  href="?hasMeasurementProperty" target="_blank">{ssn:Sensitivity}</a>
+    	         </li>
+    	         
+    	       <p>
+    	           Tempo de resposta:
+    	       </p>
+    	         <li id="hasMeasurementProperty" rel="ssn:hasMeasurementCapability/ssn:hasMeasurementProperty" resource="?hasMeasurementProperty">
+    	             <a  href="?hasMeasurementProperty" target="_blank">{ssn:ResponseTime}</a>
+    	         </li>
+    	         
+    	        <p>
+    	             Condição de funcionamento:
+    	       </p>
+        	    <li id="hasMeasurementCapability" rel="ssn:hasMeasurementCapability" resource="?hasMeasurementCapability">
+            	<a  href="?hasMeasurementCapability" target="_blank">{ssn:inCondition}</a> </li>
+    	
+    	     </ul>
+    	     
+    	 <p>Informaçãoes de localização:</p>
+    	
+    	     <ul>
+    	         <li id="City" rel="gn:locationMap/dul:hasLocation" resource="?City">
+    	             <a  href="?City" target="_blank">{rdfs:label}</a>
+    	             <p>{rdfs:comment}</p>
+    	         </li>
+    	     </ul>   
+	</div>
+</body>
+</html>
